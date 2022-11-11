@@ -1,1 +1,0 @@
-{"mappings":"AAIAA,OAAOC,GAAG,QAJK,SAAUC,G","sources":["src/js/02-video.js"],"sourcesContent":["const onPlay = function (data) {\n  // data is an object containing properties specific to that event\n};\n\nplayer.on('play', onPlay);\n"],"names":["player","on","data"],"version":3,"file":"02-video.3262eb2e.js.map"}
