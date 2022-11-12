@@ -2,6 +2,8 @@ import Player from '@vimeo/player';
 const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
 
+console.log(player);
+
 player.on('play', function () {
   console.log('played the video!');
 });
@@ -10,21 +12,30 @@ player.getVideoTitle().then(function (title) {
   console.log('title:', title);
 });
 
+let totalTimePlay = 0;
+
 const onPlay = function (data) {
   console.log('the time was updated to: ', +data.seconds);
+  totalTimePlay += data.seconds;
+  console.log(totalTimePlay);
 };
+
 player.on('timeupdate', onPlay);
 
-('videoplayer-current-time');
+console.log(totalTimePlay);
 
-player
-  .getCurrentTime()
-  .then(function (seconds) {
-    console.log(+seconds, 'current seconds ');
-    // seconds = the current playback position
-  })
-  .catch(function (error) {
-    // an error occurred
-  });
+const VideoStorage = window.localStorage;
+VideoStorage.clear();
 
-// player.on('play', onPlay);
+console.log(VideoStorage);
+
+const localStorage_key = 'videoplayer-current-time';
+
+VideoStorage.setItem(localStorage_key, totalTimePlay);
+
+// JSON.stringify(totalTimePlay);
+
+// player.on(
+//   'timeupdate',
+//   () => (VideoStorage[localStorage_key] = localStorage.currentTime)
+// );
