@@ -19,7 +19,16 @@ localStorage.setItem('feedback-form-state', JSON.stringify(formInfo));
 function onFormSubmit(event) {
   event.preventDefault();
 
-  console.log(localStorage['feedback-form-state']);
+  const formInfo = JSON.parse(localStorage.getItem('feedback-form-state'));
+
+  if (formInfo) {
+    refs.textarea.value = formInfo.message;
+    refs.input.value = formInfo.email;
+  }
+
+  console.log(formInfo);
+  //   console.log(localStorage['feedback-form-state']);
+
   console.log(`отправляем форму и очищаем поле`);
 
   event.currentTarget.reset();
@@ -27,25 +36,29 @@ function onFormSubmit(event) {
 
 function onEmailInput(event) {
   event.preventDefault();
-  formInfo.email = event.target.value;
+  formInfo.email = event.currentTarget.value;
   //   localStorage.clear();
   localStorage.setItem('feedback-form-state', JSON.stringify(formInfo));
 }
 
 function onMessageInput(event) {
   event.preventDefault();
-  formInfo.message = event.target.value;
+  formInfo.message = event.currentTarget.value;
   localStorage.setItem('feedback-form-state', JSON.stringify(formInfo));
 }
-
-const savedFormData = localStorage.getItem('feedback-form-state');
-// console.log(savedFormData);
-// localStorage.setItem('feedback-form-state', JSON.stringify(formInfo));
 
 function autoFillFormData() {
   const savedFormData = localStorage.getItem('feedback-form-state');
   if (savedFormData) console.log(savedFormData);
+  console.log(savedFormData);
 }
+
+// // expected output: 42
+
+// console.log(objformInfo.message);
+// expected output: true
+
+// localStorage.setItem('feedback-form-state', JSON.stringify(formInfo));
 
 // Під час завантаження сторінки перевіряй
 // стан сховища, і якщо там є збережені дані,
