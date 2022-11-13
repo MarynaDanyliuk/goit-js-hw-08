@@ -16,26 +16,20 @@ let totalTimePlay = 0;
 
 const onPlay = function (data) {
   console.log('the time was updated to: ', +data.seconds);
-  totalTimePlay += data.seconds;
+  totalTimePlay = data.seconds;
   console.log(totalTimePlay);
+
+  const VideoStorage = window.localStorage;
+  VideoStorage.clear();
+  const localStorage_key = 'videoplayer-current-time';
+  VideoStorage.setItem(localStorage_key, totalTimePlay);
+  console.log(VideoStorage);
 };
 
 player.on('timeupdate', onPlay);
 
-console.log(totalTimePlay);
+const currentTime = window.localStorage[`videoplayer-current-time`];
 
-const VideoStorage = window.localStorage;
-VideoStorage.clear();
+console.log(currentTime);
 
-console.log(VideoStorage);
-
-const localStorage_key = 'videoplayer-current-time';
-
-VideoStorage.setItem(localStorage_key, totalTimePlay);
-
-// JSON.stringify(totalTimePlay);
-
-// player.on(
-//   'timeupdate',
-//   () => (VideoStorage[localStorage_key] = localStorage.currentTime)
-// );
+player.setCurrentTime(currentTime);
