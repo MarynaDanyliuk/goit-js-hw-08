@@ -19,21 +19,21 @@ refs.form.addEventListener(`input`, event => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 });
 
-// console.log(localStorage[STORAGE_KEY]);
-
 const formInfo = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
 console.log(formInfo);
 
+populateForm(formInfo);
+
+function populateForm(formInfo) {
+  if (formInfo) {
+    refs.textarea.value = formInfo.message;
+    refs.input.value = formInfo.email;
+  }
+}
+
 function onFormSubmit(event) {
   event.preventDefault();
-
-  const savedFormData = localStorage.getItem(STORAGE_KEY);
-
-  if (savedFormData) {
-    console.log(savedFormData);
-    refs.form.value = JSON.parse(savedFormData);
-  }
 
   console.log(`отправляем форму и очищаем поле`);
 
