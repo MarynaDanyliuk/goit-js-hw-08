@@ -1,3 +1,5 @@
+var throttle = require('lodash.throttle');
+
 const refs = {
   form: document.querySelector(`.feedback-form`),
   input: document.querySelector(`.feedback-form input`),
@@ -11,13 +13,21 @@ const formData = {};
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 
-refs.form.addEventListener(`input`, event => {
-  //   console.log(event.target.name);
-  //   console.log(event.target.value);
+// refs.form.addEventListener(`input`, event => {
+//   //   console.log(event.target.name);
+//   //   console.log(event.target.value);
+//   formData[event.target.name] = event.target.value;
+//   console.log(formData);
+//   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+// });
+
+refs.form.addEventListener(`input`, throttle(formDataInput, 500));
+
+function formDataInput(event) {
   formData[event.target.name] = event.target.value;
   console.log(formData);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-});
+}
 
 const formInfo = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
@@ -39,46 +49,3 @@ function onFormSubmit(event) {
 
   event.currentTarget.reset();
 }
-
-// ______________________________
-// function onEmailInput(event) {
-//   event.preventDefault();
-//   const formInfo = {
-//     email: '',
-//     message: '',
-//   };
-//   formInfo.email = event.currentTarget.value;
-//   console.log(formInfo.email);
-//   //   localStorage.clear();
-//   localStorage.setItem(STORAGE_KEY, JSON.stringify(formInfo.email));
-// }
-
-// function onMessageInput(event) {
-//   event.preventDefault();
-//   const formInfo = {
-//     email: '',
-//     message: '',
-//   };
-//   formInfo.message = event.currentTarget.value;
-//   console.log(formInfo.message);
-
-//   localStorage.setItem(STORAGE_KEY, JSON.stringify(formInfo.message));
-// }
-
-// __________________________________________
-// function autoFillFormData() {
-//   const savedFormData = localStorage.getItem('feedback-form-state');
-//   if (savedFormData) console.log(savedFormData);
-//   console.log(savedFormData);
-// }
-
-// // expected output: 42
-
-// console.log(objformInfo.message);
-// expected output: true
-
-// localStorage.setItem('feedback-form-state', JSON.stringify(formInfo));
-
-// Під час завантаження сторінки перевіряй
-// стан сховища, і якщо там є збережені дані,
-//     заповнюй ними поля форми.В іншому випадку поля повинні бути порожніми
