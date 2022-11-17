@@ -9,9 +9,39 @@ const refs = {
 
 const STORAGE_KEY = 'feedback-form-state';
 
-const formData = {};
+const formData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
 refs.form.addEventListener(`submit`, onFormSubmit);
+refs.form.addEventListener(`input`, throttle(formDataInput, 500));
+
+function formDataInput(event) {
+  event.preventDefault();
+  formData[event.target.name] = event.target.value;
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+}
+
+function onFormSubmit(event) {
+  event.preventDefault();
+  event.target.reset();
+  console.log(`отправляем форму и очищаем поле`);
+  console.log(formData);
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+populateForm(formData);
+
+function populateForm(formData) {
+  if (formData.message) {
+    refs.textarea.value = formData.message;
+  }
+  if (formData.email) {
+    refs.input.value = formData.email;
+  }
+  console.log(formData);
+}
+
+// const formInfo = ;
 
 // refs.form.addEventListener(`input`, event => {
 //   //   console.log(event.target.name);
@@ -21,31 +51,19 @@ refs.form.addEventListener(`submit`, onFormSubmit);
 //   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 // });
 
-refs.form.addEventListener(`input`, throttle(formDataInput, 500));
+// ______________________
+// if (formData) {
+//   refs.textarea.value = formData.message;
+//   refs.input.value = formData.email;
+// }
+// __________________________
 
-function formDataInput(event) {
-  formData[event.target.name] = event.target.value;
-  console.log(formData);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-}
+// if (savedFormData) {
+//   console.log(savedFormData);
+//   refs.textarea.value = savedFormData.message;
+//   refs.input.value = savedFormData.email;
+//   // const savedFormData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+// }
 
-const formInfo = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-console.log(formInfo);
-
-populateForm(formInfo);
-
-function populateForm(formInfo) {
-  if (formInfo) {
-    refs.textarea.value = formInfo.message;
-    refs.input.value = formInfo.email;
-  }
-}
-
-function onFormSubmit(event) {
-  event.preventDefault();
-
-  console.log(`отправляем форму и очищаем поле`);
-
-  event.currentTarget.reset();
-}
+// _____________________
+// const savedFormData = JSON.parse(localStorage.getItem(STORAGE_KEY));

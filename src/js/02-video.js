@@ -22,13 +22,16 @@ let totalTimePlay = 0;
 const onPlay = function (data) {
   console.log('the time was updated to: ', +data.seconds);
   totalTimePlay = data.seconds;
-  console.log(totalTimePlay);
+  // console.log(totalTimePlay);
+  localStorage.setItem(STORAGE_KEY, totalTimePlay);
 
-  const VideoStorage = window.localStorage;
-  VideoStorage.clear();
-  // const localStorage_key = 'videoplayer-current-time';
-  VideoStorage.setItem(STORAGE_KEY, totalTimePlay);
-  console.log(VideoStorage);
+  if (localStorage.getItem(STORAGE_KEY) === null) {
+    player.on('play', function () {
+      console.log('played the video!');
+    });
+  }
+
+  console.log(localStorage);
 };
 
 player.on('timeupdate', throttle(onPlay, 1000));
