@@ -22,13 +22,11 @@ let totalTimePlay = 0;
 const onPlay = function (data) {
   console.log('the time was updated to: ', +data.seconds);
   totalTimePlay = data.seconds;
-  // console.log(totalTimePlay);
+  console.log(totalTimePlay);
   localStorage.setItem(STORAGE_KEY, totalTimePlay);
 
   if (localStorage.getItem(STORAGE_KEY) === null) {
-    player.on('play', function () {
-      console.log('played the video!');
-    });
+    player.on();
   }
 
   console.log(localStorage);

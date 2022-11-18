@@ -23,10 +23,13 @@ function formDataInput(event) {
 
 function onFormSubmit(event) {
   event.preventDefault();
-  event.target.reset();
-  console.log(`отправляем форму и очищаем поле`);
-  console.log(formData);
-  localStorage.removeItem(STORAGE_KEY);
+
+  if (formData.message && formData.email) {
+    console.log(`отправляем форму и очищаем поле`);
+    console.log(formData);
+    localStorage.removeItem(STORAGE_KEY);
+    event.target.reset();
+  }
 }
 
 populateForm(formData);
