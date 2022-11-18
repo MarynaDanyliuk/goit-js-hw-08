@@ -9,7 +9,7 @@ const refs = {
 
 const STORAGE_KEY = 'feedback-form-state';
 
-const formData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+let formData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.form.addEventListener(`input`, throttle(formDataInput, 500));
@@ -29,6 +29,7 @@ function onFormSubmit(event) {
     console.log(formData);
     localStorage.removeItem(STORAGE_KEY);
     event.target.reset();
+    formData = {};
   }
 }
 

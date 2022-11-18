@@ -24,18 +24,12 @@ const onPlay = function (data) {
   totalTimePlay = data.seconds;
   console.log(totalTimePlay);
   localStorage.setItem(STORAGE_KEY, totalTimePlay);
-
-  if (localStorage.getItem(STORAGE_KEY) === null) {
-    player.on();
-  }
-
-  console.log(localStorage);
 };
-
-player.on('timeupdate', throttle(onPlay, 1000));
 
 const currentTime = window.localStorage[STORAGE_KEY];
 
 console.log(currentTime);
 
-player.setCurrentTime(currentTime);
+player.setCurrentTime(currentTime || 0);
+
+player.on('timeupdate', throttle(onPlay, 1000));
